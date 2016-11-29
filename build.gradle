@@ -1,0 +1,17 @@
+apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+}
+
+ext.libraries = [:]
+libraries.groovy = 'org.codehaus.groovy:groovy-all:2.1.6'
+libraries.guava = 'com.google.guava:guava:14.0.1'
+libraries.spock = 'org.spockframework:spock-core:0.7-groovy-2.0'
+libraries.slf4j = 'org.slf4j:slf4j-api:1.7.5'
+
+dependencies {
+    compile libraries.guava
+
+    testCompile libraries.spock
+}
