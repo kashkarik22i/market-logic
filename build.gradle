@@ -15,3 +15,11 @@ dependencies {
 
     testCompile libraries.spock
 }
+
+// creates javadoc in a directory where
+// github looks for it
+task gitHubJavaDoc(type: Javadoc) {
+    source = sourceSets.main.allJava
+    destinationDir = file("$projectDir/docs")
+}
+
