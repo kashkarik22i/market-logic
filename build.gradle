@@ -24,7 +24,7 @@ dependencies {
 
 // creates javadoc in a directory where
 // github looks for it
-task gitHubJavaDoc(type: Javadoc) {
+task gitHubJavaDoc(type: Javadoc, dependsOn: build) {
     source = sourceSets.main.allJava
     destinationDir = file("$projectDir/docs")
 }
