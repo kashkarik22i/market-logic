@@ -1,4 +1,4 @@
-package org.ilya.marketlogic.scheduler
+package org.ilya.marketlogic.scheduler.command
 
 import spock.lang.Specification
 
