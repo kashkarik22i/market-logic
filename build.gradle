@@ -1,5 +1,4 @@
 apply plugin: 'java'
-apply plugin: 'maven'
 
 repositories {
     mavenCentral()
@@ -7,6 +6,7 @@ repositories {
 
 group = 'ilya'
 version = '0.0.1'
+sourceCompatibility=1.7
 
 ext.libraries = [:]
 libraries.groovy = 'org.codehaus.groovy:groovy-all:2.1.6'
@@ -28,11 +28,4 @@ task gitHubJavaDoc(type: Javadoc, dependsOn: build) {
     source = sourceSets.main.allJava
     destinationDir = file("$projectDir/docs")
 }
-
-//can be used to deploy to maven to github
-//uploadArchives {
-//    repositories.mavenDeployer {
-//        repository(url: "some local file here")
-//    }
-//}
 
