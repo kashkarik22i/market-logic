@@ -5,6 +5,7 @@ import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import org.ilya.scheduler.request.MeetingRequest;
 import org.joda.time.Interval;
+import org.joda.time.LocalTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.PeriodFormatterBuilder;
@@ -21,7 +22,8 @@ public class RequestInputFile {
     private static final Joiner SPACE_JOINER = Joiner.on(" ");
     private static final Splitter SPACE_SPLITTER = Splitter.on(" ");
 
-    private Interval officeHours;
+    private LocalTime officeHoursStart;
+    private LocalTime officeHoursEnd;
     private List<MeetingRequest> requests;
 
     private final Path filePath;
@@ -38,17 +40,24 @@ public class RequestInputFile {
     }
 
 
-    public Interval getOfficeHours() throws IOException, FileParseException {
-        if (officeHours == null) {
+    public LocalTime getOfficeHoursStart() throws IOException, FileParseException {
+        if (officeHoursStart == null) {
             parseFile();
         }
-        return officeHours;
+        return officeHoursStart;
+    }
+
+    public LocalTime getOfficeHoursEnd() throws IOException, FileParseException {
+        if (officeHoursEnd == null) {
+            parseFile();
+        }
+        return officeHoursEnd;
     }
 
     private void parseFile() throws IOException, FileParseException {
         MeetingRequestParser parser = new MeetingRequestParser(
-                DateTimeFormat.forPattern("y-M-d H:m:s"),
-                DateTimeFormat.forPattern("y-M-d H:m"),
+                DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss"),
+                DateTimeFormat.forPattern("yyyy-MM-dd HH:mm"),
                 new PeriodFormatterBuilder().appendHours().toFormatter());
         try (BufferedReader reader = Files.newBufferedReader(filePath,
                 StandardCharsets.UTF_8)) {
@@ -58,8 +67,9 @@ public class RequestInputFile {
             if (firstSplit.size() != 2) {
                 throw new FileParseException();
             }
-            officeHours = new Interval(firstLineFormat.parseDateTime(firstSplit.get(0)),
-                    firstLineFormat.parseDateTime(firstSplit.get(1)));
+            officeHoursStart = firstLineFormat.parseLocalTime(firstSplit.get(0));
+            officeHoursEnd = firstLineFormat.parseLocalTime(firstSplit.get(1));
+
             requests = Lists.newArrayList();
             boolean evenLine = true;
             while((line = reader.readLine()) != null) {

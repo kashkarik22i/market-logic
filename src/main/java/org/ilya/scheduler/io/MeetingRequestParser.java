@@ -1,9 +1,6 @@
 package org.ilya.scheduler.io;
 
-import org.ilya.scheduler.request.DefaultMeetingRequest;
-import org.ilya.scheduler.request.MeetingDetails;
-import org.ilya.scheduler.request.MeetingRequest;
-import org.ilya.scheduler.request.RequestType;
+import org.ilya.scheduler.request.*;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.format.DateTimeFormatter;
@@ -47,8 +44,9 @@ public class MeetingRequestParser {
 
     public MeetingRequest getMeetingRequest() {
         validate();
-        return new DefaultMeetingRequest(DEFAULT_REQUEST_TYPE, submission)
-                .withData(new MeetingDetails(employee), start, duration);
+        return new DefaultMeetingRequest(DEFAULT_REQUEST_TYPE,
+                new Meeting(new MeetingDetails(employee), start, duration),
+                submission);
     }
 
     public void clear() {

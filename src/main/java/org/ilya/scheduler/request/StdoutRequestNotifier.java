@@ -1,12 +1,12 @@
 package org.ilya.scheduler.request;
 
-import org.ilya.scheduler.io.Dumper;
+import org.ilya.scheduler.io.RequestDumper;
 
 public class StdoutRequestNotifier<T> implements RequestNotifier<T> {
 
-    private final Dumper<Request<T>> dumper;
+    private final RequestDumper<T> dumper;
 
-    public StdoutRequestNotifier(Dumper<Request<T>> dumper) {
+    public StdoutRequestNotifier(RequestDumper<T> dumper) {
         this.dumper = dumper;
     }
 

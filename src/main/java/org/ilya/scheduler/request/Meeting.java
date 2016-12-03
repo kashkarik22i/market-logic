@@ -9,24 +9,20 @@ public class Meeting {
 
     private final Interval interval;
     private final MeetingDetails details;
-    private final Request<Meeting> request;
 
-    public Meeting(Request<Meeting> request, MeetingDetails details,
+    public Meeting(MeetingDetails details,
                    DateTime start, Duration duration) {
-        Preconditions.checkArgument(!duration.isEqual(Duration.ZERO),
-                "Meeting's duration is zero");
-        this.interval = new Interval(start, duration);
-        this.details = details;
-        this.request = request;
+        this(details, start, start.plus(duration));
     }
 
-    public Meeting(Request<Meeting> request, MeetingDetails details,
+    public Meeting(MeetingDetails details,
                    DateTime start, DateTime end) {
-        Preconditions.checkArgument(start.isEqual(end),
-                "Meeting's start time and end time are identical");
+        Preconditions.checkArgument(start.isBefore(end),
+                "Meeting's start time must be after meetings end time");
+        Preconditions.checkArgument(start.toLocalDate().equals(end.toLocalDate()),
+                "A meeting must start and end on the same day");
         this.interval = new Interval(start, end);
         this.details = details;
-        this.request = request;
     }
 
     public DateTime getStart() {
@@ -45,16 +41,12 @@ public class Meeting {
         return interval.overlap(other.interval) != null;
     }
 
-    public boolean overlap(Interval interval) {
-        return this.interval.overlap(interval) != null;
+    public boolean isWithin(Interval interval) {
+        return interval.contains(this.interval);
     }
 
     public MeetingDetails getDetails() {
         return details;
-    }
-
-    public Request<Meeting> getRequest() {
-        return request;
     }
 
 }

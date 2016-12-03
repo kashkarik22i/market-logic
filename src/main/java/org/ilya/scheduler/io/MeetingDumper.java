@@ -45,7 +45,9 @@ public class MeetingDumper implements Dumper<Meeting> {
                 return meeting.getStart().toLocalDate();
             }
         });
-        List<LocalDate> sortedDates = Lists.newArrayList(byDate.keys());
+        // TODO what about creating a tree map out of it? I don't like
+        // TODO converting sets to lists because it is non-deterministic
+        List<LocalDate> sortedDates = Lists.newArrayList(byDate.keySet());
         Collections.sort(sortedDates);
         try (BufferedWriter writer = Files.newBufferedWriter(filePath,
                 StandardCharsets.UTF_8)) {

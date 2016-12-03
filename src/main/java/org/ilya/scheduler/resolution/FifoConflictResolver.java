@@ -9,6 +9,7 @@ import org.ilya.scheduler.request.RequestResult;
 import org.ilya.scheduler.schedule.ReadOnlySchedule;
 import org.joda.time.DateTime;
 
+import java.sql.ResultSet;
 import java.util.*;
 
 public class FifoConflictResolver extends AbstractConflictResolver<MeetingRequest, Meeting> {
@@ -33,34 +34,40 @@ public class FifoConflictResolver extends AbstractConflictResolver<MeetingReques
 
             @Override
             public ResolvedRequest<Meeting> apply(MeetingRequest request) {
-                RequestResult conflict = conflicts(request, accepted);
-                if (conflict == null && schedule.canSchedule(request).isSuccess()) {
-                    accepted.put(request.getData().getStart(), request);
-                    return new ResolvedRequest<>(request, true);
+                // TODO naming is confusing here
+                RequestResult localConflict = conflicts(request, accepted);
+                if (!localConflict.isSuccess()) {
+                    return new ResolvedRequest<>(request, localConflict);
                 } else {
-                    return new ResolvedRequest<>(request, false, conflict);
+                    RequestResult<Meeting> schedulingResult = schedule.canSchedule(request);
+                    if (!schedulingResult.isSuccess()) {
+                        return new ResolvedRequest<>(request, schedulingResult);
+                    } else {
+                        accepted.put(request.getData().getStart(), request);
+                        return new ResolvedRequest<>(request);
+                    }
                 }
             }
         });
     }
 
-    private RequestResult conflicts(MeetingRequest newRequest, NavigableMap<DateTime, MeetingRequest> existing) {
+    private RequestResult<Meeting> conflicts(MeetingRequest newRequest, NavigableMap<DateTime, MeetingRequest> existing) {
         // consideration: meeting with length zero with the same start cause troubles
         Meeting requestedMeeting = newRequest.getData();
 
         Map.Entry<DateTime, MeetingRequest> previousEntry = existing.floorEntry(
                 requestedMeeting.getStart());
         if (previousEntry != null && previousEntry.getValue().getData().overlap(requestedMeeting)) {
-            return RequestResult.conflict(previousEntry.getValue());
+            return RequestResult.conflict(previousEntry.getValue().getData());
         }
 
         Map.Entry<DateTime, MeetingRequest> nextEntry = existing.ceilingEntry(
                 requestedMeeting.getStart());
         if (nextEntry != null && nextEntry.getValue().getData().overlap(requestedMeeting)) {
-            return RequestResult.conflict(nextEntry.getValue());
+            return RequestResult.conflict(nextEntry.getValue().getData());
         }
 
-        return null;
+        return RequestResult.scheduled();
     }
 
 }

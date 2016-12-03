@@ -10,7 +10,6 @@ import org.ilya.scheduler.resolution.ConflictResolver;
 import org.ilya.scheduler.resolution.FifoConflictResolver;
 import org.ilya.scheduler.schedule.NavigableDateSchedule;
 import org.ilya.scheduler.schedule.Schedule;
-import org.joda.time.Interval;
 import org.joda.time.format.DateTimeFormat;
 
 import java.nio.file.Paths;
@@ -22,17 +21,17 @@ public class SchedulerMain {
         //RequestNotifier<Meeting> notifier = new DoNothingRequestNotifier<>();
 
         MeetingDumper dumper = new MeetingDumper(
-                DateTimeFormat.forPattern("y-M-d"),
-                DateTimeFormat.forPattern("H:m"));
+                DateTimeFormat.forPattern("yyyy-MM-dd"),
+                DateTimeFormat.forPattern("HH:mm"));
         MeetingRequestDumper requestDumper = new MeetingRequestDumper(dumper,
-                DateTimeFormat.forPattern("y-M-d H:m:s"));
+                DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss"));
 
         RequestNotifier<Meeting> notifier = new StdoutRequestNotifier<>(requestDumper);
 
         RequestInputFile input = new RequestInputFile(
                 Paths.get("src/main/java/org/ilya/scheduler/command/test"));
-        Interval officeHours = input.getOfficeHours();
-        Schedule<Meeting> schedule = new NavigableDateSchedule(officeHours);
+        Schedule<Meeting> schedule = new NavigableDateSchedule(
+                input.getOfficeHoursStart(), input.getOfficeHoursEnd());
 
         MeetingScheduler<MeetingRequest> scheduler = new DefaultMeetingScheduler<>(
                 schedule, resolver, notifier

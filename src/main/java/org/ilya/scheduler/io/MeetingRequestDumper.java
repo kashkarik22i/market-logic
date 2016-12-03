@@ -11,7 +11,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-public class MeetingRequestDumper implements Dumper<Request<Meeting>> {
+public class MeetingRequestDumper implements RequestDumper<Meeting> {
 
     private static final Joiner SEMICOLON_JOINER = Joiner.on(" ");
     private final Dumper<Meeting> meetingDumper;
@@ -20,7 +20,7 @@ public class MeetingRequestDumper implements Dumper<Request<Meeting>> {
     public MeetingRequestDumper(Dumper<Meeting> meetingDumper,
                                 DateTimeFormatter submissionFormatter) {
         this.meetingDumper = meetingDumper;
-        this.submissionFormatter=submissionFormatter;
+        this.submissionFormatter = submissionFormatter;
     }
 
     @Override
@@ -39,5 +39,10 @@ public class MeetingRequestDumper implements Dumper<Request<Meeting>> {
                 writer.newLine();
             }
         }
+    }
+
+    @Override
+    public Dumper<Meeting> getDataDumper() {
+        return meetingDumper;
     }
 }

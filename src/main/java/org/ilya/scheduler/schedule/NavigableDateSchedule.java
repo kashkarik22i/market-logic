@@ -1,11 +1,12 @@
 package org.ilya.scheduler.schedule;
 
-import com.google.common.base.Preconditions;
 import org.ilya.scheduler.request.Meeting;
 import org.ilya.scheduler.request.Request;
 import org.ilya.scheduler.request.RequestResult;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
+import org.joda.time.LocalDate;
+import org.joda.time.LocalTime;
 
 import java.util.Map;
 import java.util.NavigableMap;
@@ -13,12 +14,14 @@ import java.util.TreeMap;
 
 public class NavigableDateSchedule implements Schedule<Meeting> {
 
-    final NavigableMap<DateTime, Meeting> requests;
-    final Interval allowedHours;
+    private final NavigableMap<DateTime, Meeting> requests;
+    private final LocalTime start;
+    private final LocalTime end;
 
-    public NavigableDateSchedule(Interval allowedHours) {
+    public NavigableDateSchedule(LocalTime start, LocalTime end) {
         requests = new TreeMap<>();
-        this.allowedHours = allowedHours;
+        this.start = start;
+        this.end = end;
     }
 
     @Override
@@ -47,27 +50,29 @@ public class NavigableDateSchedule implements Schedule<Meeting> {
 
     @Override
     public RequestResult<Meeting> canSchedule(Request<? extends Meeting> request) {
-        // consideration: meeting with length zero with the same start cause troubles
-        Preconditions.checkArgument(request.getData().getStart()
-                .compareTo(request.getData().getEnd()) < 0);
         Meeting requestedMeeting = request.getData();
-        if (requestedMeeting.overlap(allowedHours)) {
+        // TODO does not work if a meeting takes place in more than one day
+        if (!requestedMeeting.isWithin(allowedHours(requestedMeeting.getStart().toLocalDate()))) {
             return RequestResult.problem("not within working hours");
         }
 
         Map.Entry<DateTime, Meeting> previousEntry = requests.floorEntry(
                 requestedMeeting.getStart());
         if (previousEntry != null && previousEntry.getValue().overlap(requestedMeeting)) {
-            return RequestResult.conflict(previousEntry.getValue().getRequest());
+            return RequestResult.conflict(previousEntry.getValue());
         }
 
         Map.Entry<DateTime, Meeting> nextEntry = requests.ceilingEntry(
                 requestedMeeting.getStart());
         if (nextEntry != null && nextEntry.getValue().overlap(requestedMeeting)) {
-            return RequestResult.conflict(nextEntry.getValue().getRequest());
+            return RequestResult.conflict(nextEntry.getValue());
         }
 
         return RequestResult.scheduled();
+    }
+
+    private Interval allowedHours(LocalDate date) {
+        return new Interval(date.toDateTime(start), date.toDateTime(end));
     }
 
     private class NavigableReadOnlySchedule implements ReadOnlySchedule<Meeting> {

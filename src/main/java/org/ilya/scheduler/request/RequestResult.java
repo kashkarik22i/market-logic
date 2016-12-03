@@ -1,6 +1,6 @@
 package org.ilya.scheduler.request;
 
-import org.ilya.scheduler.io.Dumper;
+import org.ilya.scheduler.io.RequestDumper;
 
 public class RequestResult<T> {
 
@@ -9,16 +9,16 @@ public class RequestResult<T> {
     public static ResultType SCHEDULED = ResultType.SCHEDULED;
 
     private final ResultType type;
-    private Request<T> conflictingRequest;
+    private T conflictingItem;
     private String description;
 
     private RequestResult(ResultType type) {
         this.type = type;
     }
 
-    private RequestResult(ResultType type, Request<T> conflictingRequest) {
+    private RequestResult(ResultType type, T conflictingItem) {
         this.type = type;
-        this.conflictingRequest = conflictingRequest;
+        this.conflictingItem = conflictingItem;
     }
 
     private RequestResult(ResultType type, String description) {
@@ -26,7 +26,8 @@ public class RequestResult<T> {
         this.description = description;
     }
 
-    public String getFormattedMessage(Request<T> request, Dumper<Request<T>> dumper) {
+    public String getFormattedMessage(Request<T> request,
+                                      RequestDumper<T> dumper) {
         switch (type) {
             case PROBLEM:
                 return String.format("Could not schedule \"%s\": %s",
@@ -38,19 +39,11 @@ public class RequestResult<T> {
             case CONFLICT:
                 return String.format("Could not schedule \"%s\": conflicts with \"%s\"",
                         dumper.toString(request),
-                        dumper.toString(conflictingRequest));
+                        dumper.getDataDumper().toString(conflictingItem));
             default:
                 // should not happen
                 throw new IllegalStateException("Unknown type of request result");
         }
-    }
-
-    public Request<T> getConflictingRequest() {
-        return conflictingRequest;
-    }
-
-    public String getDescription() {
-        return description;
     }
 
     public boolean isSuccess() { return type.success; }
@@ -59,8 +52,8 @@ public class RequestResult<T> {
         return new RequestResult<>(SCHEDULED);
     }
 
-    public static <R> RequestResult<R> conflict(Request<R> conflictingRequest) {
-        return new RequestResult<>(CONFLICT, conflictingRequest);
+    public static <R> RequestResult<R> conflict(R conflictingItem) {
+        return new RequestResult<>(CONFLICT, conflictingItem);
     }
 
     public static <R> RequestResult<R> problem(String description) {

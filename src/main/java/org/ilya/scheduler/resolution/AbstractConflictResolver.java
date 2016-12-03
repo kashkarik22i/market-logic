@@ -1,11 +1,14 @@
 package org.ilya.scheduler.resolution;
 
+import com.google.common.collect.Lists;
 import org.ilya.scheduler.schedule.Action;
 import org.ilya.scheduler.request.Request;
 import org.ilya.scheduler.request.RequestResult;
 import org.ilya.scheduler.request.RequestNotifier;
 import org.ilya.scheduler.schedule.ReadOnlySchedule;
 import org.ilya.scheduler.schedule.Schedule;
+
+import java.util.List;
 
 public abstract class AbstractConflictResolver<T extends Request<S>, S>
         implements ConflictResolver<T, S> {
@@ -14,7 +17,8 @@ public abstract class AbstractConflictResolver<T extends Request<S>, S>
     public final Action<Schedule<S>> resolve(ReadOnlySchedule<S> schedule,
                                              final Iterable<T> requests,
                                              final RequestNotifier<S> notifier) {
-        final Iterable<ResolvedRequest<S>> resolved = resolveRequests(schedule, requests);
+        final List<ResolvedRequest<S>> resolved = Lists.newArrayList(
+                resolveRequests(schedule, requests));
         return new Action<Schedule<S>>() {
             @Override
             public boolean apply(Schedule<S> schedule) throws Exception {
@@ -59,16 +63,16 @@ public abstract class AbstractConflictResolver<T extends Request<S>, S>
         protected final boolean toSchedule;
         protected final RequestResult<R> requestFailure;
 
-        protected ResolvedRequest(Request<R> request,
-                                  boolean toSchedule) {
-            this(request, toSchedule, null);
+        protected ResolvedRequest(Request<R> request) {
+            this.request = request;
+            this.toSchedule = true;
+            this.requestFailure = null;
         }
 
         protected ResolvedRequest(Request<R> request,
-                                  boolean toSchedule,
                                   RequestResult requestFailure) {
             this.request = request;
-            this.toSchedule = toSchedule;
+            this.toSchedule = false;
             this.requestFailure = requestFailure;
         }
     }
