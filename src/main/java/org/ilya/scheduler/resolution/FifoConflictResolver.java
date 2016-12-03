@@ -23,7 +23,7 @@ public class FifoConflictResolver extends AbstractConflictResolver<MeetingReques
                 new Comparator<MeetingRequest>() {
                     @Override
                     public int compare(MeetingRequest r0, MeetingRequest r1) {
-                        return r0.getSubmissionTime().compareTo(r1.getSubmissionTime());
+                        return r1.getSubmissionTime().compareTo(r0.getSubmissionTime());
                     }
         });
 
@@ -48,16 +48,16 @@ public class FifoConflictResolver extends AbstractConflictResolver<MeetingReques
         // consideration: meeting with length zero with the same start cause troubles
         Meeting requestedMeeting = newRequest.getData();
 
-        MeetingRequest previous = existing.floorEntry(
-                requestedMeeting.getStart()).getValue();
-        if (previous.getData().overlap(requestedMeeting)) {
-            return RequestResult.conflict(previous);
+        Map.Entry<DateTime, MeetingRequest> previousEntry = existing.floorEntry(
+                requestedMeeting.getStart());
+        if (previousEntry != null && previousEntry.getValue().getData().overlap(requestedMeeting)) {
+            return RequestResult.conflict(previousEntry.getValue());
         }
 
-        MeetingRequest next = existing.ceilingEntry(
-                requestedMeeting.getStart()).getValue();
-        if (next.getData().overlap(requestedMeeting)) {
-            return RequestResult.conflict(next);
+        Map.Entry<DateTime, MeetingRequest> nextEntry = existing.ceilingEntry(
+                requestedMeeting.getStart());
+        if (nextEntry != null && nextEntry.getValue().getData().overlap(requestedMeeting)) {
+            return RequestResult.conflict(nextEntry.getValue());
         }
 
         return null;

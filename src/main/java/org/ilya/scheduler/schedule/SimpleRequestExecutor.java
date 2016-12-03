@@ -16,6 +16,7 @@ public class SimpleRequestExecutor<T> implements RequestExecutor<T> {
         } catch (Exception e) {
             // TODO it should not happen in the current settings
             // but ideally changes to the schedule should be reverted
+            e.printStackTrace();
             action.onFailure();
         }
         if (applied) {

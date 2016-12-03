@@ -7,6 +7,7 @@ import org.ilya.scheduler.request.RequestResult;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
+import java.util.Map;
 import java.util.NavigableMap;
 import java.util.TreeMap;
 
@@ -54,16 +55,16 @@ public class NavigableDateSchedule implements Schedule<Meeting> {
             return RequestResult.problem("not within working hours");
         }
 
-        Meeting previousMeeting = requests.floorEntry(
-                requestedMeeting.getStart()).getValue();
-        if (previousMeeting.overlap(requestedMeeting)) {
-            return RequestResult.conflict(previousMeeting.getRequest());
+        Map.Entry<DateTime, Meeting> previousEntry = requests.floorEntry(
+                requestedMeeting.getStart());
+        if (previousEntry != null && previousEntry.getValue().overlap(requestedMeeting)) {
+            return RequestResult.conflict(previousEntry.getValue().getRequest());
         }
 
-        Meeting nextMeeting = requests.ceilingEntry(
-                requestedMeeting.getStart()).getValue();
-        if (nextMeeting.overlap(requestedMeeting)) {
-            return RequestResult.conflict(nextMeeting.getRequest());
+        Map.Entry<DateTime, Meeting> nextEntry = requests.ceilingEntry(
+                requestedMeeting.getStart());
+        if (nextEntry != null && nextEntry.getValue().overlap(requestedMeeting)) {
+            return RequestResult.conflict(nextEntry.getValue().getRequest());
         }
 
         return RequestResult.scheduled();

@@ -31,7 +31,7 @@ public abstract class AbstractConflictResolver<T extends Request<S>, S>
             @Override
             public void onFailure() {
                 for (T request: requests) {
-                    notifier.notify(request, RequestResult.problem("internal problem, please try again"));
+                    notifier.notify(request, RequestResult.<S>problem("internal problem, please try again"));
                 }
             }
 
@@ -40,7 +40,7 @@ public abstract class AbstractConflictResolver<T extends Request<S>, S>
                 for (ResolvedRequest<S> resolvedRequest : resolved) {
                     if (resolvedRequest.toSchedule) {
                         notifier.notify(resolvedRequest.request,
-                                RequestResult.scheduled());
+                                RequestResult.<S>scheduled());
                     } else {
                         notifier.notify(resolvedRequest.request,
                                 resolvedRequest.requestFailure);
@@ -57,7 +57,7 @@ public abstract class AbstractConflictResolver<T extends Request<S>, S>
 
         protected final Request<R> request;
         protected final boolean toSchedule;
-        protected final RequestResult requestFailure;
+        protected final RequestResult<R> requestFailure;
 
         protected ResolvedRequest(Request<R> request,
                                   boolean toSchedule) {
