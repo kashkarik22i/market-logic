@@ -14,14 +14,16 @@ public class DefaultMeetingRequest implements MeetingRequest {
         this.submissionTime = submissionTime;
     }
 
-    public void withData(MeetingDetails details,
-                         DateTime start, DateTime end) {
+    public DefaultMeetingRequest withData(MeetingDetails details,
+                                          DateTime start, DateTime end) {
         this.meeting = new Meeting(this, details, start, end);
+        return this;
     }
 
-    public void withData(MeetingDetails details,
-                         DateTime start, Duration duration) {
+    public DefaultMeetingRequest withData(MeetingDetails details,
+                                          DateTime start, Duration duration) {
         this.meeting = new Meeting(this, details, start, duration);
+        return this;
     }
 
     @Override
@@ -39,6 +41,6 @@ public class DefaultMeetingRequest implements MeetingRequest {
 
     @Override
     public DateTime getSubmissionTime() {
-        return null;
+        return submissionTime;
     }
 }

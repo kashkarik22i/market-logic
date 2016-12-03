@@ -1,12 +1,12 @@
 package org.ilya.scheduler.io;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 
 public interface Dumper<T> {
 
     String toString(T object);
 
-    void toFile(Iterable<T> objects, File file) throws IOException;
+    void dumpToFile(Iterable<T> objects, Path filePath) throws IOException;
 
 }

@@ -1,6 +1,8 @@
 package org.ilya.scheduler.command;
 
 import org.ilya.scheduler.DefaultMeetingScheduler;
+import org.ilya.scheduler.io.MeetingDumper;
+import org.ilya.scheduler.io.RequestInputFile;
 import org.ilya.scheduler.request.DoNothingRequestNotifier;
 import org.ilya.scheduler.request.Meeting;
 import org.ilya.scheduler.request.MeetingRequest;
@@ -11,18 +13,32 @@ import org.ilya.scheduler.resolution.FifoConflictResolver;
 import org.ilya.scheduler.schedule.NavigableDateSchedule;
 import org.ilya.scheduler.schedule.Schedule;
 import org.joda.time.Interval;
+import org.joda.time.format.DateTimeFormat;
+
+import java.nio.file.Paths;
 
 public class SchedulerMain {
 
-    public static void main(String[] args) {
-        Schedule<Meeting> schedule = new NavigableDateSchedule(new Interval(100, 200));
+    public static void main(String[] args) throws Exception {
         ConflictResolver<MeetingRequest, Meeting> resolver = new FifoConflictResolver();
         RequestNotifier<Meeting> notifier = new DoNothingRequestNotifier<>();
 
+        RequestInputFile input = new RequestInputFile(
+                Paths.get("src/main/java/org/ilya/scheduler/command/test"));
+        Interval officeHours = input.getOfficeHours();
+        Schedule<Meeting> schedule = new NavigableDateSchedule(officeHours);
 
-        MeetingScheduler<MeetingRequest> scheduler = new DefaultMeetingScheduler<MeetingRequest, Meeting>(
-              schedule, resolver, notifier
+        MeetingScheduler<MeetingRequest> scheduler = new DefaultMeetingScheduler<>(
+                schedule, resolver, notifier
         );
+
+        scheduler.schedule(input.getRequests());
+
+        MeetingDumper dumper = new MeetingDumper(
+                DateTimeFormat.forPattern("y-M-d"),
+                DateTimeFormat.forPattern("H:m"));
+        dumper.dumpToFile(schedule.getItems(),
+                Paths.get("src/main/java/org/ilya/scheduler/command/test.out"));
     }
 
 }
