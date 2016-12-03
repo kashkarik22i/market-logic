@@ -45,6 +45,10 @@ public class Meeting {
         return interval.overlap(other.interval) != null;
     }
 
+    public boolean overlap(Interval interval) {
+        return this.interval.overlap(interval) != null;
+    }
+
     public MeetingDetails getDetails() {
         return details;
     }

@@ -10,11 +10,12 @@ import org.ilya.scheduler.resolution.ConflictResolver;
 import org.ilya.scheduler.resolution.FifoConflictResolver;
 import org.ilya.scheduler.schedule.NavigableDateSchedule;
 import org.ilya.scheduler.schedule.Schedule;
+import org.joda.time.Interval;
 
 public class SchedulerMain {
 
     public static void main(String[] args) {
-        Schedule<Meeting> schedule = new NavigableDateSchedule();
+        Schedule<Meeting> schedule = new NavigableDateSchedule(new Interval(100, 200));
         ConflictResolver<MeetingRequest, Meeting> resolver = new FifoConflictResolver();
         RequestNotifier<Meeting> notifier = new DoNothingRequestNotifier<>();
 

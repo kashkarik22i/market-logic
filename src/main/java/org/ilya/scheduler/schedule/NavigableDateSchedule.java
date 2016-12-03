@@ -5,6 +5,7 @@ import org.ilya.scheduler.request.Meeting;
 import org.ilya.scheduler.request.Request;
 import org.ilya.scheduler.request.RequestResult;
 import org.joda.time.DateTime;
+import org.joda.time.Interval;
 
 import java.util.NavigableMap;
 import java.util.TreeMap;
@@ -12,9 +13,11 @@ import java.util.TreeMap;
 public class NavigableDateSchedule implements Schedule<Meeting> {
 
     final NavigableMap<DateTime, Meeting> requests;
+    final Interval allowedHours;
 
-    public NavigableDateSchedule() {
+    public NavigableDateSchedule(Interval allowedHours) {
         requests = new TreeMap<>();
+        this.allowedHours = allowedHours;
     }
 
     @Override
@@ -47,6 +50,9 @@ public class NavigableDateSchedule implements Schedule<Meeting> {
         Preconditions.checkArgument(request.getData().getStart()
                 .compareTo(request.getData().getEnd()) < 0);
         Meeting requestedMeeting = request.getData();
+        if (requestedMeeting.overlap(allowedHours)) {
+            return RequestResult.problem("not within working hours");
+        }
 
         Meeting previousMeeting = requests.floorEntry(
                 requestedMeeting.getStart()).getValue();
