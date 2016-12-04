@@ -4,7 +4,6 @@ import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import org.ilya.scheduler.request.MeetingRequest;
-import org.joda.time.Interval;
 import org.joda.time.LocalTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -62,31 +61,44 @@ public class RequestInputFile {
         try (BufferedReader reader = Files.newBufferedReader(filePath,
                 StandardCharsets.UTF_8)) {
             String line = reader.readLine();
-            DateTimeFormatter firstLineFormat = DateTimeFormat.forPattern("Hm");
+            if (line == null) {
+                throw new FileParseException(0, "File is empty");
+            }
+            DateTimeFormatter firstLineFormat = DateTimeFormat.forPattern("HHmm");
             List<String> firstSplit = Lists.newArrayList(SPACE_SPLITTER.split(line));
             if (firstSplit.size() != 2) {
-                throw new FileParseException();
+                throw new FileParseException(1, "First line is not correctly formatted");
             }
             officeHoursStart = firstLineFormat.parseLocalTime(firstSplit.get(0));
             officeHoursEnd = firstLineFormat.parseLocalTime(firstSplit.get(1));
 
             requests = Lists.newArrayList();
             boolean evenLine = true;
+            int lineNumber = 1;
             while((line = reader.readLine()) != null) {
+                lineNumber++;
                 List<String> split = Lists.newArrayList(SPACE_SPLITTER.split(line));
                 if (split.size() != 3) {
-                    throw new FileParseException();
+                    throw new FileParseException(lineNumber,
+                            String.format("Line \"%s\" is not correctly formatted", line));
                 }
                 String dateTimeString = SPACE_JOINER.join(split.get(0), split.get(1));
-                if (evenLine) {
-                    parser.parseSubmissionTime(dateTimeString);
-                    parser.parseEmployee(split.get(2));
-                } else {
-                    parser.parseMeetingStart(dateTimeString);
-                    parser.parseDuration(split.get(2));
+                try {
+                    if (evenLine) {
+                        parser.parseSubmissionTime(dateTimeString);
+                        parser.parseEmployee(split.get(2));
+                    } else {
+                        parser.parseMeetingStart(dateTimeString);
+                        parser.parseDuration(split.get(2));
 
-                    requests.add(parser.getMeetingRequest());
-                    parser.clear();
+                        requests.add(parser.getMeetingRequest());
+                        parser.clear();
+                    }
+                    // TODO this is quite BAD, need to wrap it with a cuspom one
+                    // TODO the problem is that this is what joda does
+                } catch (IllegalArgumentException e) {
+                    throw new FileParseException(lineNumber,
+                            String.format("Line \"%s\" is not correctly formatted", line));
                 }
                 evenLine = !evenLine;
             }

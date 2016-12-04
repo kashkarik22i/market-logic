@@ -5,12 +5,12 @@ import org.joda.time.Duration
 import org.joda.time.Interval
 import spock.lang.Specification;
 
-public class TestMeeting extends Specification {
+class TestMeeting extends Specification {
 
-    def now = new DateTime(2016, 12, 03, 18, 0);
-    def day = Duration.standardDays(1L)
-    def hour = Duration.standardHours(1L)
-    def minute = Duration.standardMinutes(1L)
+    final def now = new DateTime(2016, 12, 03, 18, 0);
+    final def day = Duration.standardDays(1L)
+    final def hour = Duration.standardHours(1L)
+    final def minute = Duration.standardMinutes(1L)
 
     def interval(from, to) {
         new Interval(from, to)

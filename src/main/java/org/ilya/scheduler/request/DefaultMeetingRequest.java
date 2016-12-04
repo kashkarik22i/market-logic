@@ -14,6 +14,10 @@ public class DefaultMeetingRequest implements MeetingRequest {
         this.meeting = meeting;
     }
 
+    public DefaultMeetingRequest(Meeting meeting, DateTime submissionTime) {
+        this(RequestType.ADD_REQUEST, meeting, submissionTime);
+    }
+
     @Override
     public RequestType getType() {
         return type;

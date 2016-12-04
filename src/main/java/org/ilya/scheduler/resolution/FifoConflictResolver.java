@@ -9,7 +9,6 @@ import org.ilya.scheduler.request.RequestResult;
 import org.ilya.scheduler.schedule.ReadOnlySchedule;
 import org.joda.time.DateTime;
 
-import java.sql.ResultSet;
 import java.util.*;
 
 public class FifoConflictResolver extends AbstractConflictResolver<MeetingRequest, Meeting> {
@@ -24,7 +23,7 @@ public class FifoConflictResolver extends AbstractConflictResolver<MeetingReques
                 new Comparator<MeetingRequest>() {
                     @Override
                     public int compare(MeetingRequest r0, MeetingRequest r1) {
-                        return r1.getSubmissionTime().compareTo(r0.getSubmissionTime());
+                        return r0.getSubmissionTime().compareTo(r1.getSubmissionTime());
                     }
         });
 
@@ -52,7 +51,6 @@ public class FifoConflictResolver extends AbstractConflictResolver<MeetingReques
     }
 
     private RequestResult<Meeting> conflicts(MeetingRequest newRequest, NavigableMap<DateTime, MeetingRequest> existing) {
-        // consideration: meeting with length zero with the same start cause troubles
         Meeting requestedMeeting = newRequest.getData();
 
         Map.Entry<DateTime, MeetingRequest> previousEntry = existing.floorEntry(

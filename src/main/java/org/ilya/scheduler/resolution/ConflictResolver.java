@@ -1,8 +1,8 @@
 package org.ilya.scheduler.resolution;
 
-import org.ilya.scheduler.schedule.Action;
 import org.ilya.scheduler.request.Request;
 import org.ilya.scheduler.request.RequestNotifier;
+import org.ilya.scheduler.schedule.Action;
 import org.ilya.scheduler.schedule.ReadOnlySchedule;
 import org.ilya.scheduler.schedule.Schedule;
 

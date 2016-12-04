@@ -1,4 +1,5 @@
 apply plugin: 'java'
+apply plugin: 'application'
 
 repositories {
     mavenCentral()
@@ -8,19 +9,28 @@ group = 'ilya'
 version = '0.0.1'
 sourceCompatibility=1.7
 
+mainClassName= 'org.ilya.scheduler.SchedulerMain'
+
 ext.libraries = [:]
 libraries.groovy = 'org.codehaus.groovy:groovy-all:2.1.6'
 libraries.guava = 'com.google.guava:guava:14.0.1'
 libraries.spock = 'org.spockframework:spock-core:0.7-groovy-2.0'
 libraries.slf4j = 'org.slf4j:slf4j-api:1.7.5'
 libraries.joda = 'joda-time:joda-time:2.9.6'
+libraries.airline = 'com.github.rvesse:airline:2.2.0'
+libraries.commonsIo = 'org.apache.commons:commons-io:1.3.2'
 
 dependencies {
     compile libraries.guava
     compile libraries.joda
+    compile libraries.airline
+    compile libraries.commonsIo
 
     testCompile libraries.spock
 }
+
+
+
 
 // creates javadoc in a directory where
 // github looks for it

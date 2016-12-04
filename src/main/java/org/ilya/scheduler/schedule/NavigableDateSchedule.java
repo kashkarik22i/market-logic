@@ -1,5 +1,6 @@
 package org.ilya.scheduler.schedule;
 
+import com.google.common.base.Preconditions;
 import org.ilya.scheduler.request.Meeting;
 import org.ilya.scheduler.request.Request;
 import org.ilya.scheduler.request.RequestResult;
@@ -19,6 +20,7 @@ public class NavigableDateSchedule implements Schedule<Meeting> {
     private final LocalTime end;
 
     public NavigableDateSchedule(LocalTime start, LocalTime end) {
+        Preconditions.checkArgument(start.isBefore(end));
         requests = new TreeMap<>();
         this.start = start;
         this.end = end;
@@ -26,7 +28,7 @@ public class NavigableDateSchedule implements Schedule<Meeting> {
 
     @Override
     public ReadOnlySchedule<Meeting> readOnlyView() {
-        return new NavigableReadOnlySchedule();
+        return this;
     }
 
     @Override
@@ -75,17 +77,5 @@ public class NavigableDateSchedule implements Schedule<Meeting> {
         return new Interval(date.toDateTime(start), date.toDateTime(end));
     }
 
-    private class NavigableReadOnlySchedule implements ReadOnlySchedule<Meeting> {
-
-        @Override
-        public Iterable<Meeting> getItems() {
-            return NavigableDateSchedule.this.getItems();
-        }
-
-        @Override
-        public RequestResult canSchedule(Request<? extends Meeting> request) {
-            return NavigableDateSchedule.this.canSchedule(request);
-        }
-    }
 
 }
