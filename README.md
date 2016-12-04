@@ -6,8 +6,8 @@
 Java 7 is the version which has been tested
 Java 8 should work, but has not been tested
 
-#### GIT
-To clone the repository
+#### Git
+You need to have Git installed to clone the repository
 
 ### Command line tool
 
@@ -76,7 +76,7 @@ Here is an example of an entry point (specific input data is required for it to 
 RequestNotifier<Meeting> notifier = new DoNothingRequestNotifier<Meeting>();
 
 // Create a conflict resolver, which prioritizes requests
-// The resolver below prioritises requests by submittion time,
+// The resolver below prioritizes requests by submittion time,
 // but another resolver could take other information into account 
 ConflictResolver<MeetingRequest, Meeting> resolver = new FifoConflictResolver();
 
@@ -100,17 +100,17 @@ Iterable<Meeting> items = schedule.getItems()
 
 Here are links to the relevant documentation pages:
 * Data types:
-..* [Meeting](https://kashkarik22i.github.io/scheduler/org/ilya/scheduler/request/Meeting.html)
-..* [Request](https://kashkarik22i.github.io/scheduler/org/ilya/scheduler/request/Request.html)
-..* [MeetingRequest](https://kashkarik22i.github.io/scheduler/org/ilya/scheduler/request/MeetingRequest.html)
+  * [Meeting](https://kashkarik22i.github.io/scheduler/org/ilya/scheduler/request/Meeting.html)
+  * [Request](https://kashkarik22i.github.io/scheduler/org/ilya/scheduler/request/Request.html)
+  * [MeetingRequest](https://kashkarik22i.github.io/scheduler/org/ilya/scheduler/request/MeetingRequest.html)
 * Scheduling:
-..* [Scheduler](https://kashkarik22i.github.io/scheduler/org/ilya/scheduler/Scheduler.html) 
-..* [DefaultScheduler](https://kashkarik22i.github.io/scheduler/org/ilya/scheduler/DefaultScheduler.html)
-..* [RequestNotifier](https://kashkarik22i.github.io/scheduler/org/ilya/scheduler/request/RequestNotifier.html)
-..* [Schedule](https://kashkarik22i.github.io/scheduler/org/ilya/scheduler/request/schedule/Schedule.html)
-..* [NavigableDateSchedule](https://kashkarik22i.github.io/scheduler/org/ilya/scheduler/request/schedule/NavigableDateSchedule.html)
-..* [ConflictResolver](https://kashkarik22i.github.io/scheduler/org/ilya/scheduler/request/schedule/ConflictResolver.html)
-..* [FifoConflictResolver](https://kashkarik22i.github.io/scheduler/org/ilya/scheduler/request/schedule/FifoConflictResolver.html)
+  * [Scheduler](https://kashkarik22i.github.io/scheduler/org/ilya/scheduler/Scheduler.html) 
+  * [DefaultScheduler](https://kashkarik22i.github.io/scheduler/org/ilya/scheduler/DefaultScheduler.html)
+  * [RequestNotifier](https://kashkarik22i.github.io/scheduler/org/ilya/scheduler/request/RequestNotifier.html)
+  * [Schedule](https://kashkarik22i.github.io/scheduler/org/ilya/scheduler/request/schedule/Schedule.html)
+  * [NavigableDateSchedule](https://kashkarik22i.github.io/scheduler/org/ilya/scheduler/request/schedule/NavigableDateSchedule.html)
+  * [ConflictResolver](https://kashkarik22i.github.io/scheduler/org/ilya/scheduler/request/schedule/ConflictResolver.html)
+  * [FifoConflictResolver](https://kashkarik22i.github.io/scheduler/org/ilya/scheduler/request/schedule/FifoConflictResolver.html)
 
 ### Known issues
 Assuming requirements are not strict, the library should work.
