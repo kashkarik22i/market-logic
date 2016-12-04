@@ -123,10 +123,10 @@ Here are links to the relevant documentation pages:
   * [Scheduler](https://kashkarik22i.github.io/scheduler/org/ilya/scheduler/Scheduler.html) 
   * [DefaultScheduler](https://kashkarik22i.github.io/scheduler/org/ilya/scheduler/DefaultScheduler.html)
   * [RequestNotifier](https://kashkarik22i.github.io/scheduler/org/ilya/scheduler/request/RequestNotifier.html)
-  * [Schedule](https://kashkarik22i.github.io/scheduler/org/ilya/scheduler/request/schedule/Schedule.html)
-  * [NavigableDateSchedule](https://kashkarik22i.github.io/scheduler/org/ilya/scheduler/request/schedule/NavigableDateSchedule.html)
-  * [ConflictResolver](https://kashkarik22i.github.io/scheduler/org/ilya/scheduler/request/schedule/ConflictResolver.html)
-  * [FifoConflictResolver](https://kashkarik22i.github.io/scheduler/org/ilya/scheduler/request/schedule/FifoConflictResolver.html)
+  * [Schedule](https://kashkarik22i.github.io/scheduler/org/ilya/scheduler/schedule/Schedule.html)
+  * [NavigableDateSchedule](https://kashkarik22i.github.io/scheduler/org/ilya/scheduler/schedule/NavigableDateSchedule.html)
+  * [RequestPrioritizer](https://kashkarik22i.github.io/scheduler/org/ilya/scheduler/schedule/RequestPrioritizer.html)
+  * [FifoRequestPrioritizer](https://kashkarik22i.github.io/scheduler/org/ilya/scheduler/schedule/FifoRequestPrioritizer.html)
 
 ### Known issues
 Assuming requirements are not strict, the library should work.
