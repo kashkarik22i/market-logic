@@ -40,6 +40,7 @@ task jarAll(type: Jar) {
 // creates javadoc in a directory where
 // github looks for it
 task gitHubJavaDoc(type: Javadoc, dependsOn: build) {
+    classpath = project.sourceSets.main.compileClasspath
     source = sourceSets.main.allJava
     destinationDir = file("$projectDir/docs")
 }
