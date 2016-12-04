@@ -83,7 +83,7 @@ public class RequestInputFile {
             int lineNumber = 1;
             while((line = reader.readLine()) != null) {
                 lineNumber++;
-                List<String> split = Lists.newArrayList(SPACE_SPLITTER.split(line));
+                List<String> split = Lists.newArrayList(SPACE_SPLITTER.limit(3).split(line));
                 if (split.size() != 3) {
                     throw new FileParseException(lineNumber,
                             String.format("Line \"%s\" is not correctly formatted", line));

@@ -59,4 +59,18 @@ class TestRequestInputFile extends Specification {
         e.lineNumber == 1
     }
 
+    def "test multi-word employee"() {
+        given:
+        def inputFilePath = Paths.get(getClass().getResource('multiword-employee.in').file)
+
+        when:
+        def input = new RequestInputFile(inputFilePath);
+        def requests = input.requests
+
+        then:
+        notThrown(FileParseException)
+
+        requests.collect { it.data.details.employee } == ['Ilya Kashkarev']
+    }
+
 }

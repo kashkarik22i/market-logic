@@ -16,7 +16,7 @@ import java.nio.file.Path;
  */
 public class MeetingRequestDumper implements RequestDumper<Meeting> {
 
-    private static final Joiner SEMICOLON_JOINER = Joiner.on(" ");
+    private static final Joiner SEMICOLON_JOINER = Joiner.on(" ; ");
     private final Dumper<Meeting> meetingDumper;
     private final DateTimeFormatter submissionFormatter;
 
