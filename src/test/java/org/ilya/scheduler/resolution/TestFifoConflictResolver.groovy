@@ -1,7 +1,6 @@
 package org.ilya.scheduler.resolution
 
 import org.ilya.scheduler.request.DefaultMeetingRequest
-import org.ilya.scheduler.request.DoNothingRequestNotifier
 import org.ilya.scheduler.request.Meeting
 import org.ilya.scheduler.request.MeetingDetails
 import org.joda.time.DateTime
@@ -18,42 +17,42 @@ class TestFifoConflictResolver extends Specification {
         new MeetingDetails(employee)
     }
 
-    def "test resolve empty"() {
+    def "test prioritize empty"() {
         given:
-        def resolver = new FifoConflictResolver()
+        def resolver = new FifoRequestPrioritizer()
 
         when:
-        def resolved = resolver.resolve([]).collect()
+        def resolved = resolver.prioritize([]).collect()
 
         then:
         resolved == []
     }
 
-    def "test resolve two non-conflicting"() {
+    def "test prioritize two non-conflicting"() {
         given:
-        def resolver = new FifoConflictResolver()
+        def resolver = new FifoRequestPrioritizer()
         def meetings = [new Meeting(employee('x'), now, hour),
                         new Meeting(employee('y'), now + hour, now + hour + hour)]
         def counter = 1L;
         def requests = meetings.collect { new DefaultMeetingRequest(it, (now - hour) - counter++) }
 
         when:
-        def resolved = resolver.resolve(requests).collect()
+        def resolved = resolver.prioritize(requests).collect()
 
         then:
         resolved == requests.reverse() // in the order of submission
     }
 
-    def "test resolve two conflicting"() {
+    def "test prioritize two conflicting"() {
         given:
-        def resolver = new FifoConflictResolver()
+        def resolver = new FifoRequestPrioritizer()
         def meetings = [new Meeting(employee('x'), now, hour),
                         new Meeting(employee('y'), now + halfHour, now + halfHour + hour)]
         def counter = 1L;
         def requests = meetings.collect { new DefaultMeetingRequest(it, (now - hour) + counter++) }
 
         when:
-        def resolved = resolver.resolve(requests).collect()
+        def resolved = resolver.prioritize(requests).collect()
 
         then:
         resolved == requests

@@ -2,6 +2,9 @@ package org.ilya.scheduler.request;
 
 import org.ilya.scheduler.io.RequestDumper;
 
+/**
+ * A {@link RequestNotifier} which prints request results to standard output
+ */
 public class StdoutRequestNotifier<T> implements RequestNotifier<T> {
 
     private final RequestDumper<T> dumper;

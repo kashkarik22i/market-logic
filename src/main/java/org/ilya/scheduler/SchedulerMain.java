@@ -12,8 +12,8 @@ import org.ilya.scheduler.io.FileParseException;
 import org.ilya.scheduler.io.MeetingDumper;
 import org.ilya.scheduler.io.MeetingRequestDumper;
 import org.ilya.scheduler.request.*;
-import org.ilya.scheduler.resolution.ConflictResolver;
-import org.ilya.scheduler.resolution.FifoConflictResolver;
+import org.ilya.scheduler.resolution.RequestPrioritizer;
+import org.ilya.scheduler.resolution.FifoRequestPrioritizer;
 import org.ilya.scheduler.io.RequestInputFile;
 import org.ilya.scheduler.schedule.NavigableDateSchedule;
 import org.joda.time.LocalTime;
@@ -60,6 +60,7 @@ public class SchedulerMain {
 
     public static void main(String[] args) throws Exception {
 
+        // TODO should use logging throughout the code
         // try to catch exceptions and change exit code
         try {
             System.exit(getCli().parse(args).call());
@@ -134,7 +135,7 @@ public class SchedulerMain {
                     new StdoutRequestNotifier<>(requestDumper) : new DoNothingRequestNotifier<Meeting>();
 
             // create a resolver for scheduling events
-            ConflictResolver<MeetingRequest> resolver = new FifoConflictResolver();
+            RequestPrioritizer<MeetingRequest> resolver = new FifoRequestPrioritizer();
 
             // process the input file
             RequestInputFile inputFile = new RequestInputFile(Paths.get(input));

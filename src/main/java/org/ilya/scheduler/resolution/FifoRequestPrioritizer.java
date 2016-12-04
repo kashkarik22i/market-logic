@@ -5,10 +5,15 @@ import org.ilya.scheduler.request.MeetingRequest;
 
 import java.util.*;
 
-public class FifoConflictResolver implements ConflictResolver<MeetingRequest> {
+/**
+ *
+ * A {@link RequestPrioritizer} which orders requests based on their submission time.
+ *
+ */
+public class FifoRequestPrioritizer implements RequestPrioritizer<MeetingRequest> {
 
     @Override
-    public Iterable<MeetingRequest> resolve(Iterable<MeetingRequest> requests) {
+    public Iterable<MeetingRequest> prioritize(Iterable<MeetingRequest> requests) {
         List<MeetingRequest> sorted = Lists.newArrayList(requests);
         Collections.sort(sorted,
                 new Comparator<MeetingRequest>() {

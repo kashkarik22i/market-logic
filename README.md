@@ -6,9 +6,6 @@
 Java 7 is the version which has been tested
 Java 8 should work, but has not been tested
 
-#### Git
-You need to have Git installed to clone the repository
-
 ### Command line tool
 
 Run the following command to create a command
@@ -116,6 +113,9 @@ Here are links to the relevant documentation pages:
 Assuming requirements are not strict, the library should work.
 However, of course, there are details and corner cases which have not been
 covered.
+
+One issue worth mentioning is that parsing is a bit lenient because
+the parsing library is so. See bug report [here](https://github.com/JodaOrg/joda-time/issues/60).
   
 In many cases potential issues were commented as "TODO" in the code. 
 One can grep "TODO" (yes, just like that) to have an overview.

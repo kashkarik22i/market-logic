@@ -1,5 +1,8 @@
 package org.ilya.scheduler.request;
 
+/**
+ * A {@link RequestNotifier} which does nothing
+ */
 public class DoNothingRequestNotifier<T> implements RequestNotifier<T> {
 
     @Override

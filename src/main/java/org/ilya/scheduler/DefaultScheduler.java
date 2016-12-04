@@ -3,12 +3,12 @@ package org.ilya.scheduler;
 import org.ilya.scheduler.request.Request;
 import org.ilya.scheduler.request.RequestNotifier;
 import org.ilya.scheduler.request.RequestResult;
-import org.ilya.scheduler.resolution.ConflictResolver;
+import org.ilya.scheduler.resolution.RequestPrioritizer;
 import org.ilya.scheduler.schedule.Schedule;
 
 /**
  * Default implementation of {@link Scheduler} with a more complex type.
- * {@link Request Requests} are prioritized by a given {@link ConflictResolver}
+ * {@link Request Requests} are prioritized by a given {@link RequestPrioritizer}
  * and are stored in a given {@link Schedule}
  *
  * @param <T> type of requests to be processed
@@ -17,11 +17,11 @@ import org.ilya.scheduler.schedule.Schedule;
 public class DefaultScheduler<T extends Request<? extends S>, S> implements Scheduler<T> {
 
     private final Schedule<S> schedule;
-    private final ConflictResolver<T> resolver;
+    private final RequestPrioritizer<T> resolver;
     private final RequestNotifier<S> notifier;
 
     public DefaultScheduler(Schedule<S> schedule,
-                            ConflictResolver<T> resolver,
+                            RequestPrioritizer<T> resolver,
                             RequestNotifier<S> notifier) {
         this.schedule = schedule;
         this.resolver = resolver;
@@ -38,7 +38,7 @@ public class DefaultScheduler<T extends Request<? extends S>, S> implements Sche
      */
     @Override
     public void schedule(Iterable<T> requests) {
-        Iterable<T> prioritized = resolver.resolve(requests);
+        Iterable<T> prioritized = resolver.prioritize(requests);
         // TODO support batch mode for requests which can only be executed together
         for (T request : prioritized) {
             RequestResult<S> result = schedule.schedule(request);
