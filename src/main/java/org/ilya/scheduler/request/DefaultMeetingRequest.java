@@ -2,6 +2,9 @@ package org.ilya.scheduler.request;
 
 import org.joda.time.DateTime;
 
+/**
+ * Default implementation for a {@link Request} of a {@link Meeting}
+ */
 public class DefaultMeetingRequest implements MeetingRequest {
 
     private final RequestType type;

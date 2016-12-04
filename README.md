@@ -116,6 +116,9 @@ covered.
 
 One issue worth mentioning is that parsing is a bit lenient because
 the parsing library is so. See bug report [here](https://github.com/JodaOrg/joda-time/issues/60).
+
+Another issue which currently bothers me a lot is that the types for
+meetings, requests and dumpers are not very flexible and convenient to use.
   
 In many cases potential issues were commented as "TODO" in the code. 
 One can grep "TODO" (yes, just like that) to have an overview.
@@ -141,29 +144,29 @@ High level information:
 
 Low level log (still an approximation for simplicity):
 
-|  Date  | Start | Duration |                    Description                       |
-| ------ | ----- | -------- | ---------------------------------------------------- |
-| Nov 29 | 22:00 |   00:30  | set up basic gradle project and some dependencies    |
-| Nov 29 | 22:30 |   00:30  | read the task description carefully, making notes    |
-| Nov 29 | 23:30 |   00:15  | sceleton classes just to have something              |
-| Nov 30 | 00:00 |   00:30  | learned how to generate API docs and set it up       |
-| Nov 30 | 00:45 |   00:45  | design sketch on paper                               |
-| Nov 30 | 22:30 |   00:30  | small detour into joda-time package                  |
-| Nov 30 | 23:00 |   00:45  | implementation of scheduler, resolver, executor      |
-| Dec 01 | 00:45 |   03:00  | adding details to classes, added an example schedule |
-| Dec 01 | 20:00 |   03:30  | implemented all but data handling and notifications  |
-| Dec 02 | 00:30 |   00:30  | re-factoring                                         |
-| Dec 02 | 20:30 |   00:30  | investigating fast maven deployment options          |
-| Dec 02 | 21:30 |   00:30  | renaming packages and repositories                   |
-| Dec 02 | 22:00 |   00:30  | deployed with maven on github and tested             |
-| Dec 03 | 00:30 |   00:30  | implemented a way to dump meetings                   |
-| Dec 03 | 01:30 |   01:15  | finished first copy which could word                 |
-| Dec 03 | 02:45 |   00:15  | debugging                                            |
-| Dec 03 | 14:30 |   03:30  | writing tests                                        |
-| Dec 03 | 20:00 |   01:15  | adding command line                                  |
-| Dec 03 | 21:30 |   00:15  | setting up command line tests                        |
-| Dec 03 | 23:00 |   01:45  | added more tests                                     |
-| Dec 04 | 01:00 |   00:30  | testing command line executable                      |
-| Dec 04 | 12:00 |   01:30  | readme file                                          |
-| Dec 04 | 16:00 |   01:00  | javadoc                                              |
-| Dec 04 | 17:00 |   03:00  | re-factoring, simplification                         |
+|  Date  | Duration |                    Description                       |
+| ------ | -------- | ---------------------------------------------------- |
+| Nov 29 |   00:30  | set up basic gradle project and some dependencies    |
+| Nov 29 |   00:30  | read the task description carefully, making notes    |
+| Nov 29 |   00:15  | sceleton classes just to have something              |
+| Nov 30 |   00:30  | learned how to generate API docs and set it up       |
+| Nov 30 |   00:45  | design sketch on paper                               |
+| Nov 30 |   00:30  | small detour into joda-time package                  |
+| Nov 30 |   00:45  | implementation of scheduler, resolver, executor      |
+| Dec 01 |   03:00  | adding details to classes, added an example schedule |
+| Dec 01 |   03:30  | implemented all but data handling and notifications  |
+| Dec 02 |   00:30  | re-factoring                                         |
+| Dec 02 |   00:30  | investigating fast maven deployment options          |
+| Dec 02 |   00:30  | renaming packages and repositories                   |
+| Dec 02 |   00:30  | deployed with maven on github and tested             |
+| Dec 03 |   00:30  | implemented a way to dump meetings                   |
+| Dec 03 |   01:15  | finished first copy which could word                 |
+| Dec 03 |   00:15  | debugging                                            |
+| Dec 03 |   03:30  | writing tests                                        |
+| Dec 03 |   01:15  | adding command line                                  |
+| Dec 03 |   00:15  | setting up command line tests                        |
+| Dec 03 |   01:45  | added more tests                                     |
+| Dec 04 |   00:30  | testing command line executable                      |
+| Dec 04 |   01:30  | readme file                                          |
+| Dec 04 |   04:00  | javadoc, re-factoring, simplification                |
+

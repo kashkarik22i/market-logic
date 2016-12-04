@@ -6,6 +6,9 @@ import org.joda.time.Duration;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.PeriodFormatter;
 
+/**
+ * A state-full object which builds a {@link MeetingRequest}.
+ */
 public class MeetingRequestParser {
 
     private static final RequestType DEFAULT_REQUEST_TYPE = RequestType.ADD_REQUEST;

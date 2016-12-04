@@ -16,6 +16,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
+// TODO this class is to specific and looks rather ad hoc
+/**
+ * A very rudimentary class for parsing a particular type of
+ * files. It was written with no plan for re-use or flexibility.
+ * It should be converted into something more generic
+ */
 public class RequestInputFile {
 
     private static final Joiner SPACE_JOINER = Joiner.on(" ");
@@ -94,7 +100,7 @@ public class RequestInputFile {
                         requests.add(parser.getMeetingRequest());
                         parser.clear();
                     }
-                    // TODO this is quite BAD, need to wrap it with a cuspom one
+                    // TODO this is quite BAD, need to wrap it with a custom one
                     // TODO the problem is that this is what joda does
                 } catch (IllegalArgumentException e) {
                     throw new FileParseException(lineNumber,

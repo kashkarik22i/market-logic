@@ -11,6 +11,9 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+/**
+ * Dumper for {@link Request} of {@link Meeting}
+ */
 public class MeetingRequestDumper implements RequestDumper<Meeting> {
 
     private static final Joiner SEMICOLON_JOINER = Joiner.on(" ");
