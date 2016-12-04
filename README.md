@@ -32,16 +32,33 @@ or
 ./build/install/scheduler/bin/scheduler help schedule
 ```
 
+A sample input file for the command can be found here:
+```
+./src/test/resources/org/ilya/scheduler/command/complex-test.in
+```
+
 ### How to use the library
 
 To use the scheduler library you can proceed
 in one of the two following ways
 
 #### Build a jar
-To build a library jar run
+
+To build a jar containing all the dependencies run:
+
+```
+./gradlew jarAll
+```
+
+To build a jar only containing the library run:
 
 ```
 ./gradlew jar
+```
+
+Both jars can be found under
+```
+./build/libs/
 ```
 
 #### From a gradle script
@@ -64,7 +81,9 @@ Here is a link to the [API documentation](https://kashkarik22i.github.io/schedul
 #### Example usage
 This section should be eventually moved to the API documentation itself.
 
-Here is an example of an entry point (specific input data is required for it to work):
+Here is an example of an entry point (based
+upon [Scheduler](https://kashkarik22i.github.io/scheduler/org/ilya/scheduler/SchedulerMain.html)):
+
 ```java
 // Create a notifier, which will receive notifications regarding
 // successes of failures of scheduling requests
@@ -72,10 +91,10 @@ Here is an example of an entry point (specific input data is required for it to 
 // to a file or print them
 RequestNotifier<Meeting> notifier = new DoNothingRequestNotifier<Meeting>();
 
-// Create a conflict resolver, which prioritizes requests
-// The resolver below prioritizes requests by submittion time,
-// but another resolver could take other information into account 
-ConflictResolver<MeetingRequest, Meeting> resolver = new FifoConflictResolver();
+// Create a request prioritizer, which prioritizes requests
+// The prioritizer below prioritizes requests by submittion time,
+// but another prioritizer could take other information into account 
+RequestPrioritizer<MeetingRequest> prioritizer = new FifoRequestPrioritizer();
 
 // Create a schedule for storing events. It may grow to become a database in theory.
 // The only available implementation is for Meeting objects. It has a restriction
@@ -91,8 +110,8 @@ Scheduler<MeetingRequest> scheduler = new DefaultScheduler<>(
 // To schedule events run the following on an Iterable of event requests
 scheduler.schedule(requests);
 
-// Events are stored in the schedule and can be accesed via
-Iterable<Meeting> items = schedule.getItems()
+// Events are stored in the schedule and for this particular implementation can be accesed via
+Iterable<Meeting> items = schedule.getItems();
 ```
 
 Here are links to the relevant documentation pages:

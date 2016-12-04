@@ -135,7 +135,7 @@ public class SchedulerMain {
                     new StdoutRequestNotifier<>(requestDumper) : new DoNothingRequestNotifier<Meeting>();
 
             // create a resolver for scheduling events
-            RequestPrioritizer<MeetingRequest> resolver = new FifoRequestPrioritizer();
+            RequestPrioritizer<MeetingRequest> prioritizer = new FifoRequestPrioritizer();
 
             // process the input file
             RequestInputFile inputFile = new RequestInputFile(Paths.get(input));
@@ -161,7 +161,7 @@ public class SchedulerMain {
 
             // create a scheduler
             Scheduler<MeetingRequest> scheduler = new DefaultScheduler<>(
-                    schedule, resolver, notifier);
+                    schedule, prioritizer, notifier);
 
 
             // schedule requests
