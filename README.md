@@ -139,7 +139,7 @@ High level information:
 |    testing     |   06:00  |
 |     total      |   27:00  |
 
-Low level log:
+Low level log (still an approximation for simplicity):
 
 |  Date  | Start | Duration |                    Description                       |
 | ------ | ----- | -------- | ---------------------------------------------------- |
