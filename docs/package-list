@@ -1,5 +1,4 @@
 org.ilya.scheduler
-org.ilya.scheduler.command
 org.ilya.scheduler.io
 org.ilya.scheduler.request
 org.ilya.scheduler.resolution
