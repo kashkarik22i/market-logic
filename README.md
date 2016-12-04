@@ -85,10 +85,10 @@ remove unused flexibility.
 #### Work log
 High level information:
 | Type of work   | Duration |
-| infrastructure |   04:45  |
-|    learning    |   01:15  |
-| implementation |   14:45  |
-|    testing     |   06:15  |
+| infrastructure |   04:30  |
+|    learning    |   02:30  |
+| implementation |   14:00  |
+|    testing     |   06:00  |
 |     total      |   27:00  |
 
 Low level information:
