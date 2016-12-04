@@ -82,7 +82,7 @@ Here is a link to the [API documentation](https://kashkarik22i.github.io/schedul
 This section should be eventually moved to the API documentation itself.
 
 Here is an example of an entry point (based
-upon [SchedulerMain.java](https://github.com/kashkarik22i/scheduler/blob/master/src/main/java/org/ilya/scheduler/SchedulerMain.java#L122):
+upon [SchedulerMain.java](https://github.com/kashkarik22i/scheduler/blob/master/src/main/java/org/ilya/scheduler/SchedulerMain.java#L122)):
 
 ```java
 // Create a notifier, which will receive notifications regarding
@@ -134,7 +134,7 @@ However, of course, there are details and corner cases which have not been
 covered.
 
 One issue worth mentioning is that parsing is a bit lenient because
-the parsing library is so. See bug report [here](https://github.com/JodaOrg/joda-time/issues/60).
+the parsing library is so. See a bug report [here](https://github.com/JodaOrg/joda-time/issues/60).
 
 Another issue which currently bothers me a lot is that the types for
 meetings, requests and dumpers are not very flexible and convenient to use.
