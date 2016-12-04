@@ -26,7 +26,7 @@ public class RequestResult<T> {
         this.description = description;
     }
 
-    public String getFormattedMessage(Request<T> request,
+    public String getFormattedMessage(Request<? extends T> request,
                                       RequestDumper<T> dumper) {
         switch (type) {
             case PROBLEM:

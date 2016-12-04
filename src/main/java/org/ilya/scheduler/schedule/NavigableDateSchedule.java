@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 import org.ilya.scheduler.request.Meeting;
 import org.ilya.scheduler.request.Request;
 import org.ilya.scheduler.request.RequestResult;
+import org.ilya.scheduler.request.RequestType;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
@@ -26,18 +27,16 @@ public class NavigableDateSchedule implements Schedule<Meeting> {
         this.end = end;
     }
 
-    @Override
-    public ReadOnlySchedule<Meeting> readOnlyView() {
-        return this;
+    private Interval allowedHours(LocalDate date) {
+        return new Interval(date.toDateTime(start), date.toDateTime(end));
+    }
+
+    public Iterable<Meeting> getItems() {
+        return requests.values();
     }
 
     @Override
-    public RequestExecutor<Meeting> getRequestExecutor() {
-        return new SimpleRequestExecutor<>(this);
-    }
-
-    @Override
-    public RequestResult schedule(Request<? extends Meeting> request) {
+    public RequestResult<Meeting> schedule(Request<? extends Meeting> request) {
         RequestResult result = canSchedule(request);
         if (result.isSuccess()) {
             requests.put(request.getData().getStart(), request.getData());
@@ -45,13 +44,11 @@ public class NavigableDateSchedule implements Schedule<Meeting> {
         return result;
     }
 
-    @Override
-    public Iterable<Meeting> getItems() {
-        return requests.values();
-    }
-
-    @Override
-    public RequestResult<Meeting> canSchedule(Request<? extends Meeting> request) {
+    protected RequestResult<Meeting> canSchedule(Request<? extends Meeting> request) {
+        if (request.getType() != RequestType.ADD_REQUEST) {
+            return RequestResult.problem(String.format("%s requests are not supported",
+                    request.getType().toString()));
+        }
         Meeting requestedMeeting = request.getData();
         // TODO does not work if a meeting takes place in more than one day
         if (!requestedMeeting.isWithin(allowedHours(requestedMeeting.getStart().toLocalDate()))) {
@@ -72,10 +69,5 @@ public class NavigableDateSchedule implements Schedule<Meeting> {
 
         return RequestResult.scheduled();
     }
-
-    private Interval allowedHours(LocalDate date) {
-        return new Interval(date.toDateTime(start), date.toDateTime(end));
-    }
-
 
 }

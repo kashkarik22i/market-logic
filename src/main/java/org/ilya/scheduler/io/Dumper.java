@@ -7,6 +7,6 @@ public interface Dumper<T> {
 
     String toString(T object);
 
-    void dumpToFile(Iterable<T> objects, Path filePath) throws IOException;
+    void dumpToFile(Iterable<? extends T> objects, Path filePath) throws IOException;
 
 }

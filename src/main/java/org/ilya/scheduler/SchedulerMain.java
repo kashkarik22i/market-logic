@@ -14,7 +14,6 @@ import org.ilya.scheduler.io.MeetingRequestDumper;
 import org.ilya.scheduler.request.*;
 import org.ilya.scheduler.resolution.ConflictResolver;
 import org.ilya.scheduler.resolution.FifoConflictResolver;
-import org.ilya.scheduler.schedule.Schedule;
 import org.ilya.scheduler.io.RequestInputFile;
 import org.ilya.scheduler.schedule.NavigableDateSchedule;
 import org.joda.time.LocalTime;
@@ -135,7 +134,7 @@ public class SchedulerMain {
                     new StdoutRequestNotifier<>(requestDumper) : new DoNothingRequestNotifier<Meeting>();
 
             // create a resolver for scheduling events
-            ConflictResolver<MeetingRequest, Meeting> resolver = new FifoConflictResolver();
+            ConflictResolver<MeetingRequest> resolver = new FifoConflictResolver();
 
             // process the input file
             RequestInputFile inputFile = new RequestInputFile(Paths.get(input));
@@ -156,7 +155,7 @@ public class SchedulerMain {
             }
 
             // create a schedule
-            Schedule<Meeting> schedule = new NavigableDateSchedule(
+            NavigableDateSchedule schedule = new NavigableDateSchedule(
                     startOfficeHours, endOfficeHours);
 
             // create a scheduler

@@ -24,17 +24,17 @@ public class MeetingRequestDumper implements RequestDumper<Meeting> {
     }
 
     @Override
-    public String toString(Request<Meeting> request) {
+    public String toString(Request<? extends Meeting> request) {
         return SEMICOLON_JOINER.join(
                 submissionFormatter.print(request.getSubmissionTime()),
                 meetingDumper.toString(request.getData()));
     }
 
     @Override
-    public void dumpToFile(Iterable<Request<Meeting>> requests, Path filePath) throws IOException {
+    public void dumpToFile(Iterable<? extends Request<? extends Meeting>> requests, Path filePath) throws IOException {
         try (BufferedWriter writer = Files.newBufferedWriter(filePath,
                 StandardCharsets.UTF_8)) {
-            for (Request<Meeting> request : requests) {
+            for (Request<? extends Meeting> request : requests) {
                 writer.write(toString(request));
                 writer.newLine();
             }
@@ -45,4 +45,5 @@ public class MeetingRequestDumper implements RequestDumper<Meeting> {
     public Dumper<Meeting> getDataDumper() {
         return meetingDumper;
     }
+
 }

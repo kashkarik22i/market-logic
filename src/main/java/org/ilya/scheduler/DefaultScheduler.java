@@ -2,9 +2,8 @@ package org.ilya.scheduler;
 
 import org.ilya.scheduler.request.Request;
 import org.ilya.scheduler.request.RequestNotifier;
+import org.ilya.scheduler.request.RequestResult;
 import org.ilya.scheduler.resolution.ConflictResolver;
-import org.ilya.scheduler.schedule.Action;
-import org.ilya.scheduler.schedule.RequestExecutor;
 import org.ilya.scheduler.schedule.Schedule;
 
 /**
@@ -18,17 +17,15 @@ import org.ilya.scheduler.schedule.Schedule;
 public class DefaultScheduler<T extends Request<? extends S>, S> implements Scheduler<T> {
 
     private final Schedule<S> schedule;
-    private final ConflictResolver<T, S> resolver;
-    private final RequestExecutor<S> executor;
-    private final RequestNotifier notifier;
+    private final ConflictResolver<T> resolver;
+    private final RequestNotifier<S> notifier;
 
     public DefaultScheduler(Schedule<S> schedule,
-                            ConflictResolver<T, S> resolver,
+                            ConflictResolver<T> resolver,
                             RequestNotifier<S> notifier) {
         this.schedule = schedule;
         this.resolver = resolver;
         this.notifier = notifier;
-        this.executor = schedule.getRequestExecutor();
     }
 
     /**
@@ -41,8 +38,12 @@ public class DefaultScheduler<T extends Request<? extends S>, S> implements Sche
      */
     @Override
     public void schedule(Iterable<T> requests) {
-        Action<Schedule<S>> action = resolver.resolve(schedule.readOnlyView(), requests, notifier);
-        executor.execute(action);
+        Iterable<T> prioritized = resolver.resolve(requests);
+        // TODO support batch mode for requests which can only be executed together
+        for (T request : prioritized) {
+            RequestResult<S> result = schedule.schedule(request);
+            notifier.notify(request, result);
+        }
     }
 
 }

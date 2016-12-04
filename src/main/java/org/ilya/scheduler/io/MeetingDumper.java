@@ -38,8 +38,8 @@ public class MeetingDumper implements Dumper<Meeting> {
     }
 
     @Override
-    public void dumpToFile(Iterable<Meeting> meetings, Path filePath) throws IOException {
-        Multimap<LocalDate, Meeting> byDate = Multimaps.index(meetings, new Function<Meeting, LocalDate>() {
+    public void dumpToFile(Iterable<? extends Meeting> meetings, Path filePath) throws IOException {
+        Multimap<LocalDate, ? extends Meeting> byDate = Multimaps.index(meetings, new Function<Meeting, LocalDate>() {
             @Override
             public LocalDate apply(Meeting meeting) {
                 return meeting.getStart().toLocalDate();

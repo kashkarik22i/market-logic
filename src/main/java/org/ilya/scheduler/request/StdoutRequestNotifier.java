@@ -11,7 +11,7 @@ public class StdoutRequestNotifier<T> implements RequestNotifier<T> {
     }
 
     @Override
-    public void notify(Request<T> request, RequestResult<T> status) {
+    public void notify(Request<? extends T> request, RequestResult<T> status) {
         System.out.println(status.getFormattedMessage(request, dumper));
     }
 
