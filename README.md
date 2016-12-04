@@ -6,16 +6,21 @@
 Java 7 is the version which has been tested
 Java 8 should work, but has not been tested
 
-#### git
+#### GIT
 To clone the repository
 
 ### Command line tool
 
-Run the following commands to create a command
-line executable tool for scheduling: 
+Run the following command to create a command
+line executable: 
 
 ```
 ./gradlew installApp
+```
+
+The executable can be found here:
+```
+./build/install/scheduler/bin/scheduler
 ```
 
 For a menu of available commands and options run
@@ -32,11 +37,11 @@ or
 
 ### How to use the library
 
-To use the code as a library you can proceed
-in one of the two following ways.
+To use the scheduler library you can proceed
+in one of the two following ways
 
 #### Build a jar
-To build a library jar file run
+To build a library jar run
 
 ```
 ./gradlew jar
@@ -56,17 +61,15 @@ dependencies {
 }
 ```
 
-### How to use the library
-
 #### API documentation
 Here is a link to the [API documentation](https://kashkarik22i.github.io/scheduler/) 
 
-### Key classes description
-This section should be eventually moved to the documentation
+#### Key classes description
+This section should be eventually moved to the API documentation itself
 
 TODO
 
-#### Known issues
+### Known issues
 Assuming requirements are not strict, the library should work.
 However, of course, there are details and corner cases which have not been
 covered.
@@ -84,7 +87,9 @@ remove unused flexibility.
 
 #### Work log
 High level information:
+
 | Type of work   | Duration |
+| -------------- | -------- |
 | infrastructure |   04:30  |
 |    learning    |   02:30  |
 | implementation |   14:00  |
