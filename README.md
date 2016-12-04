@@ -82,7 +82,7 @@ Here is a link to the [API documentation](https://kashkarik22i.github.io/schedul
 This section should be eventually moved to the API documentation itself.
 
 Here is an example of an entry point (based
-upon [Scheduler](https://kashkarik22i.github.io/scheduler/org/ilya/scheduler/SchedulerMain.html)):
+upon [SchedulerMain.java](https://github.com/kashkarik22i/scheduler/blob/master/src/main/java/org/ilya/scheduler/SchedulerMain.java#L122):
 
 ```java
 // Create a notifier, which will receive notifications regarding
@@ -125,8 +125,8 @@ Here are links to the relevant documentation pages:
   * [RequestNotifier](https://kashkarik22i.github.io/scheduler/org/ilya/scheduler/request/RequestNotifier.html)
   * [Schedule](https://kashkarik22i.github.io/scheduler/org/ilya/scheduler/schedule/Schedule.html)
   * [NavigableDateSchedule](https://kashkarik22i.github.io/scheduler/org/ilya/scheduler/schedule/NavigableDateSchedule.html)
-  * [RequestPrioritizer](https://kashkarik22i.github.io/scheduler/org/ilya/scheduler/schedule/RequestPrioritizer.html)
-  * [FifoRequestPrioritizer](https://kashkarik22i.github.io/scheduler/org/ilya/scheduler/schedule/FifoRequestPrioritizer.html)
+  * [RequestPrioritizer](https://kashkarik22i.github.io/scheduler/org/ilya/scheduler/resolution/RequestPrioritizer.html)
+  * [FifoRequestPrioritizer](https://kashkarik22i.github.io/scheduler/org/ilya/scheduler/resolution/FifoRequestPrioritizer.html)
 
 ### Known issues
 Assuming requirements are not strict, the library should work.
