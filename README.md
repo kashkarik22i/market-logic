@@ -96,30 +96,31 @@ High level information:
 |    testing     |   06:00  |
 |     total      |   27:00  |
 
-Low level information:
-| Date |Start| Duration |                  Description                        |
-|Nov 29|22:00|   00:30  |set up basic gradle project and some dependencies    |
-|Nov 29|22:30|   00:30  |read the task description carefully, making notes    |
-|Nov 29|23:30|   00:15  |sceleton classes just to have something              |
-|Nov 30|00:00|   00:30  |learned how to generate API docs and set it up       |
-|Nov 30|00:45|   00:45  |design sketch on paper                               |
-|Nov 30|22:30|   00:30  |small detour into joda-time package                  |
-|Nov 30|23:00|   00:45  |implementation of scheduler, resolver, executor      |
-|Dec 01|00:45|   03:00  |adding details to classes, added an example schedule |
-|Dec 01|20:00|   03:30  |implemented all but data handling and notifications  |
-|Dec 02|00:30|   00:30  |re-factoring                                         |
-|Dec 02|20:30|   00:30  |investigating fast maven deployment options          |
-|Dec 02|21:30|   00:30  |renaming packages and repositories                   |
-|Dec 02|22:00|   00:30  |deployed with maven on github and tested             |
-|Dec 03|00:30|   00:30  |implemented a way to dump meetings                   |
-|Dec 03|01:30|   01:15  |finished first copy which could word                 |
-|Dec 03|02:45|   00:15  |debugging                                            |
-|Dec 03|14:30|   03:30  |writing tests                                        |
-|Dec 03|20:00|   01:15  |adding command line                                  |
-|Dec 03|21:30|   00:15  |setting up command line tests                        |
-|Dec 03|23:00|   01:45  |added more tests                                     |
-|Dec 04|01:00|   00:30  |testing command line executable                      |
-|Dec 04|12:00|   01:30  |readme file                                          |
-|Dec 04|16:00|   01:00  |javadoc                                              |
-|Dec 04|17:00|   03:00  |re-factoring, simplification                         |
+Low level log:
 
+|  Date  | Start | Duration |                    Description                       |
+| ------ | ----- | -------- | ---------------------------------------------------- |
+| Nov 29 | 22:00 |   00:30  | set up basic gradle project and some dependencies    |
+| Nov 29 | 22:30 |   00:30  | read the task description carefully, making notes    |
+| Nov 29 | 23:30 |   00:15  | sceleton classes just to have something              |
+| Nov 30 | 00:00 |   00:30  | learned how to generate API docs and set it up       |
+| Nov 30 | 00:45 |   00:45  | design sketch on paper                               |
+| Nov 30 | 22:30 |   00:30  | small detour into joda-time package                  |
+| Nov 30 | 23:00 |   00:45  | implementation of scheduler, resolver, executor      |
+| Dec 01 | 00:45 |   03:00  | adding details to classes, added an example schedule |
+| Dec 01 | 20:00 |   03:30  | implemented all but data handling and notifications  |
+| Dec 02 | 00:30 |   00:30  | re-factoring                                         |
+| Dec 02 | 20:30 |   00:30  | investigating fast maven deployment options          |
+| Dec 02 | 21:30 |   00:30  | renaming packages and repositories                   |
+| Dec 02 | 22:00 |   00:30  | deployed with maven on github and tested             |
+| Dec 03 | 00:30 |   00:30  | implemented a way to dump meetings                   |
+| Dec 03 | 01:30 |   01:15  | finished first copy which could word                 |
+| Dec 03 | 02:45 |   00:15  | debugging                                            |
+| Dec 03 | 14:30 |   03:30  | writing tests                                        |
+| Dec 03 | 20:00 |   01:15  | adding command line                                  |
+| Dec 03 | 21:30 |   00:15  | setting up command line tests                        |
+| Dec 03 | 23:00 |   01:45  | added more tests                                     |
+| Dec 04 | 01:00 |   00:30  | testing command line executable                      |
+| Dec 04 | 12:00 |   01:30  | readme file                                          |
+| Dec 04 | 16:00 |   01:00  | javadoc                                              |
+| Dec 04 | 17:00 |   03:00  | re-factoring, simplification                         |
