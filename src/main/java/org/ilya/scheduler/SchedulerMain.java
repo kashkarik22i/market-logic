@@ -156,7 +156,7 @@ public class SchedulerMain {
                     startOfficeHours, endOfficeHours);
 
             // create a scheduler
-            MeetingScheduler<MeetingRequest> scheduler = new DefaultMeetingScheduler<>(
+            Scheduler<MeetingRequest> scheduler = new DefaultScheduler<>(
                     schedule, resolver, notifier);
 
 

@@ -1,6 +1,6 @@
 package org.ilya.scheduler;
 
-public interface MeetingScheduler<T> {
+public interface Scheduler<T> {
 
     boolean schedule(Iterable<T> requests);
 
