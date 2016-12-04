@@ -1,7 +1,24 @@
 package org.ilya.scheduler;
 
-public interface Scheduler<T> {
+import org.ilya.scheduler.request.Request;
 
-    boolean schedule(Iterable<T> requests);
+/**
+ *
+ * Interface for classes which can schedule.
+ *
+ * @param <T> type of requests
+ *
+ * @see DefaultScheduler
+ * @see Request
+ */
+public interface Scheduler<T extends Request<?>> {
+
+    /**
+     *
+     * Schedule requests.
+     *
+     * @param requests requests to be scheduled
+     */
+    void schedule(Iterable<T> requests);
 
 }

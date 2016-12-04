@@ -29,6 +29,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+/**
+ * Entry point to run a default version of {@link Scheduler} on specified inputs.
+ * Command line parsing is included.
+ */
 public class SchedulerMain {
 
     public static Cli<Callable<Integer>> getCli() {
