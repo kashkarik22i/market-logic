@@ -143,12 +143,11 @@ In many cases potential issues were commented as "TODO" in the code.
 One can grep "TODO" (yes, just like that) to have an overview.
 
 ### Implementation notes
-The library was developed within one week and quality was compromised
-in favor of quantity. This is probably not a desirable approach, but
-I was too excited to make it look like a "real" usable library. If the result
-turns out not very good, at least I enjoyed the process! I took certain amount of
-time at the end to improve robustness, re-factor unclear bits and
-remove unused flexibility.
+The library was developed within one week and some quality aspects were compromised.
+This is probably not a desirable approach, but I was too excited to make it look
+like a "real" usable library. If the result turns out not very good, at least
+I enjoyed the process! I took certain amount of time at the end to improve robustness,
+re-factor unclear bits and remove unused flexibility.
 
 #### Work log
 High level information:
