@@ -64,10 +64,53 @@ dependencies {
 #### API documentation
 Here is a link to the [API documentation](https://kashkarik22i.github.io/scheduler/) 
 
-#### Key classes description
-This section should be eventually moved to the API documentation itself
+#### Example usage
+This section should be eventually moved to the API documentation itself.
 
-TODO
+Here is an example of an entry point (specific input data is required for it to work):
+```java
+// Create a notifier, which will receive notifications regarding
+// successes of failures of scheduling requests
+// The notifier below does nothing, but it could e.g. save notifications
+// to a file or print them
+RequestNotifier<Meeting> notifier = new DoNothingRequestNotifier<Meeting>();
+
+// Create a conflict resolver, which prioritizes requests
+// The resolver below prioritises requests by submittion time,
+// but another resolver could take other information into account 
+ConflictResolver<MeetingRequest, Meeting> resolver = new FifoConflictResolver();
+
+// Create a schedule for storing events. It may grow to become a database in theory.
+// The only available implementation is for Meeting objects. It has a restriction
+// that all meetings have to be within a certain time boundary.
+Schedule<Meeting> schedule = new NavigableDateSchedule(startOfficeHours, endOfficeHours);
+
+// Create a scheduler from the objects instantiated above. A scheduler
+// does the job of scheduling events and notifying the notifier.
+// It is the main entry point for this library. 
+Scheduler<MeetingRequest> scheduler = new DefaultScheduler<>(
+                    schedule, resolver, notifier);
+
+// To schedule events run the following on an Iterable of event requests
+scheduler.schedule(requests);
+
+// Events are stored in the schedule and can be accesed via
+Iterable<Meeting> items = schedule.getItems()
+```
+
+Here are links to the relevant documentation pages:
+* Data types:
+..* [Meeting](https://kashkarik22i.github.io/scheduler/org/ilya/scheduler/request/Meeting.html)
+..* [Request](https://kashkarik22i.github.io/scheduler/org/ilya/scheduler/request/Request.html)
+..* [MeetingRequest](https://kashkarik22i.github.io/scheduler/org/ilya/scheduler/request/MeetingRequest.html)
+* Scheduling:
+..* [Scheduler](https://kashkarik22i.github.io/scheduler/org/ilya/scheduler/Scheduler.html) 
+..* [DefaultScheduler](https://kashkarik22i.github.io/scheduler/org/ilya/scheduler/DefaultScheduler.html)
+..* [RequestNotifier](https://kashkarik22i.github.io/scheduler/org/ilya/scheduler/request/RequestNotifier.html)
+..* [Schedule](https://kashkarik22i.github.io/scheduler/org/ilya/scheduler/request/schedule/Schedule.html)
+..* [NavigableDateSchedule](https://kashkarik22i.github.io/scheduler/org/ilya/scheduler/request/schedule/NavigableDateSchedule.html)
+..* [ConflictResolver](https://kashkarik22i.github.io/scheduler/org/ilya/scheduler/request/schedule/ConflictResolver.html)
+..* [FifoConflictResolver](https://kashkarik22i.github.io/scheduler/org/ilya/scheduler/request/schedule/FifoConflictResolver.html)
 
 ### Known issues
 Assuming requirements are not strict, the library should work.
